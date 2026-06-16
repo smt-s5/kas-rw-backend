@@ -66,6 +66,7 @@ def get_all():
 
     rows = cursor.fetchall()
 
+    cursor.close()  # ← tambah
     db.close()
 
     return rows
@@ -85,6 +86,7 @@ def get_one(id: int):
 
     row = cursor.fetchone()
 
+    cursor.close()  # ← tambah
     db.close()
 
     if not row:
@@ -121,6 +123,7 @@ def create(data: TransaksiBase):
 
     new_id = cursor.lastrowid
 
+    cursor.close()  # ← tambah
     db.close()
 
     return {
@@ -144,6 +147,7 @@ def update(id: int, data: TransaksiUpdate):
     row = cursor.fetchone()
 
     if not row:
+        cursor.close()  # ← tambah
         db.close()
         raise HTTPException(
             status_code=404,
@@ -180,6 +184,7 @@ def update(id: int, data: TransaksiUpdate):
 
     db.commit()
 
+    cursor.close()  # ← tambah
     db.close()
 
     return {
@@ -203,6 +208,7 @@ def delete(id: int):
 
     affected = cursor.rowcount
 
+    cursor.close()  # ← tambah
     db.close()
 
     if affected == 0:
